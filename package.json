@@ -1,0 +1,14 @@
+{
+  "name": "express-docs-block",
+  "version": "0.0.1",
+  "description": "Generate an Express.js documentation page with markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vincelwt",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "^0.6.1"
+  }
+}

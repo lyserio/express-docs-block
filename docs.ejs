@@ -1,0 +1,37 @@
+<style type="text/css">
+	<%= css %>	
+</style>
+
+<div class='container'>
+	<div class="column sidebar">
+
+		<% for (let item of docsData) { %>
+			<% if (item.type === 'title') { %>
+				<span><%= item.name %></span>
+			<% } else { %>
+				<a href='/docs/<%= item.id %>' id='<%= item.id %>' class="<%= currentItem === item.id ? 'active' : '' %>"><%= item.name %></a>
+			<% } %>
+		<% } %>
+
+	</div>
+
+	<div class='column' id='content'>
+		<%- content %>
+	</div>
+</div>
+
+<script>
+
+	let subMenu = ""
+	
+	for (let header of document.querySelectorAll('h2, h3')) {
+		subMenu += `<a class='link${header.tagName == 'H3' ? 3 : 2}' href='#${header.id}'>${header.textContent}</a>`
+	}
+
+	let submenu = document.createElement('div')
+	submenu.innerHTML = subMenu
+	submenu.id = 'subMenu'
+
+	document.getElementById('<%= currentItem %>').parentNode.insertBefore(submenu, document.getElementById('<%= currentItem %>').nextSibling);
+
+</script>
