@@ -1,37 +1,92 @@
-<style type="text/css">
-	<%= css %>	
-</style>
+<style type="text/css"><%= css %></style>
+<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/arta.min.css" media="none" onload="if(media!='all')media='all'">
 
-<div class='container'>
-	<div class="column sidebar">
+<div class='docsContainer'>
+	<div class="docsSidebar">
 
-		<% for (let item of docsData) { %>
+		<% for (let item of menuItems) { %>
 			<% if (item.type === 'title') { %>
 				<span><%= item.name %></span>
 			<% } else { %>
-				<a href='/docs/<%= item.id %>' id='<%= item.id %>' class="<%= currentItem === item.id ? 'active' : '' %>"><%= item.name %></a>
+				<a href='/docs/<%= item.id %>' doc-item='<%= item.id %>' class="docItem <%= currentItem === item.id ? 'active' : '' %>"><%= item.name %></a>
 			<% } %>
 		<% } %>
 
 	</div>
 
-	<div class='column' id='content'>
+	<div class='docsContent'>
 		<%- content %>
 	</div>
 </div>
 
 <script>
 
+	function isElementInViewport (el) {
+		var rect = el.getBoundingClientRect()
+		var xMargin = 20
+		return (
+			(rect.top + xMargin) >= 0 &&
+			(rect.bottom - xMargin) <= (window.innerHeight || document.documentElement.clientHeight)
+		)
+    }
+
 	let subMenu = ""
-	
-	for (let header of document.querySelectorAll('h2, h3')) {
-		subMenu += `<a class='link${header.tagName == 'H3' ? 3 : 2}' href='#${header.id}'>${header.textContent}</a>`
+	/* Generate submenu on the fly from content */
+	const headings = document.querySelectorAll('.docsContent h2, .docsContent h3')
+	for (let header of headings) {
+		subMenu += `<a class='docItem link${header.tagName == 'H3' ? 3 : 2}' doc-subitem='${header.id}' href='#${header.id}'>${header.textContent}</a>`
 	}
 
-	let submenu = document.createElement('div')
-	submenu.innerHTML = subMenu
-	submenu.id = 'subMenu'
+	let el = document.createElement('div')
+	el.innerHTML = subMenu
+	el.classList.add('subMenu')
 
-	document.getElementById('<%= currentItem %>').parentNode.insertBefore(submenu, document.getElementById('<%= currentItem %>').nextSibling);
+	const currentItem = document.querySelector('[doc-item="<%= currentItem %>"]')
+	currentItem.parentNode.insertBefore(el, currentItem.nextSibling)
+
+	// Update selected element on the left
+	const updateAnchor = () => {
+		const currentId = window.location.hash.replace('#', '')
+
+		if (document.querySelector('[doc-subitem].active')) document.querySelector('[doc-subitem].active').classList.remove('active')
+		document.querySelector(`[doc-subitem="${currentId}"]`).classList.add('active')
+	}
+
+	// Update URL to correct anchor
+	const scanAnchors = () => {
+		for (let header of headings) {
+			if (isElementInViewport(header)) {
+				window.history.pushState(null, null, '#'+ header.id)
+				return
+			}
+		}
+	}
+
+	let waiting = false // So we don't run it too often and slow down page
+	let blockAnchorChange = false // Prevent conflict with hashchange event
+	window.addEventListener('scroll', (e) => {
+		if (waiting || blockAnchorChange) return
+
+		waiting = true
+
+		scanAnchors()
+		updateAnchor()
+
+		setTimeout(() => {
+			waiting = false
+		}, 100)
+	})
+
+	/* Trigger when user click on href='#SomeTitle' from the sidebar */
+	window.addEventListener('hashchange', (e) => {
+
+		blockAnchorChange = true
+		
+		updateAnchor()
+
+		setTimeout(() => {
+			blockAnchor = false
+		}, 800)
+	})
 
 </script>
