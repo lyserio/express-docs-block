@@ -86,22 +86,33 @@
 /* Actual content converted from markdown */
 
 .docsContent {
-	margin-left: 50px;
+	margin-left: 5%;
 	min-width: 0;
 }
 
 .docsContent h1 {
-	margin: 0 0 10px 0;
+	margin: 0 0 1rem 0;
 }
 
-.docsContent pre {
+.docsContent h2,
+.docsContent h3 {
+	margin: 2rem 0 1rem 0;
+}
+
+.docsContent pre,
+.docsContent blockquote,
+.docsContent table {
 	margin: 20px 0;
 	max-width: 100%;
 	width: 100%;
 	overflow: scroll;
+	border-radius: 6px;
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+}
+
+.docsContent pre {
 	background: #0a1a36;
 	padding: 10px;
-	border-radius: 6px;
 	box-sizing: border-box;
 }
 
@@ -123,15 +134,34 @@
 }
 
 .docsContent table {
-	margin: 10px 0;
-	width: 100%;
 	border-collapse: collapse;
+	overflow: hidden;
 }
 
-.docsContent table, th, td {
-   border: 1px solid #ccc;
-   padding: 5px;
+.docsContent th,
+.docsContent td {
+	padding: 13px 20px;
+	overflow: hidden;
 }
+
+.docsContent tbody {
+	max-height: 585px;
+	overflow: auto;
+}
+
+.docsContent th {
+	color: #fff;
+	background: var(--primary-color, #2196F3);
+}
+
+.docsContent td {
+	color: #333;
+}
+
+.docsContent tr:nth-child(even) {
+	background: #f8f6ff;
+}
+
 
 .docsContent img {
 	max-width: 100%;
@@ -143,11 +173,8 @@
 .docsContent blockquote {
 	border-left: 5px solid var(--primary-color, #2196F3);
 	padding-left: 1rem;
-	margin-left: 0;
-	margin-right: 0;
 	font-style: italic;
 	background-color: #EEF9FF;
-	border-radius: 3px;
 	padding: 0.5rem 1rem;
 }
 

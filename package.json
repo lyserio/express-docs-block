@@ -1,6 +1,6 @@
 {
   "name": "express-docs-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fast and easy Express.js Doc page with Markdown",
   "main": "index.js",
   "scripts": {
