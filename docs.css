@@ -131,6 +131,7 @@
 	color: #eee;
 	border-radius: 4px;
 	padding: 4px 7px;
+	font-weight: 300;
 }
 
 .docsContent table {
@@ -162,12 +163,15 @@
 	background: #f8f6ff;
 }
 
-
 .docsContent img {
 	max-width: 100%;
 	display: block;
 	text-align: center;
 	margin: auto;
+}
+
+.docsContent h1 img {
+    display: inline-block;
 }
 
 .docsContent blockquote {
