@@ -1,6 +1,6 @@
 {
   "name": "express-docs-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Fast and easy Express.js Doc page with Markdown",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.7.1",
-    "highlight.js": "^9.15.10",
-    "marked": "^0.6.1"
+    "highlight.js": "^9.16.2",
+    "marked": "^0.7.0"
   }
 }
