@@ -11,6 +11,6 @@
   "dependencies": {
     "ejs": "^2.7.1",
     "highlight.js": "^9.16.2",
-    "marked": "^0.7.0"
+    "marked": "^4.0.10"
   }
 }
